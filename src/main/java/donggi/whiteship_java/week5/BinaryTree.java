@@ -73,7 +73,7 @@ public class BinaryTree {
         return values;
     }
 
-    public void dfs() {
+    private void dfs() {
         // 왼쪽, 루트, 오른쪽 순으로 순회한다.
         inOrderRecursive(root);
     }
