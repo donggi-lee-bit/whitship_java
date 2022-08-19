@@ -1,5 +1,10 @@
 package donggi.whiteship_java.week5;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class BinaryTree {
 
     Node root;
@@ -37,12 +42,40 @@ public class BinaryTree {
         postOrderRecursive(root);
     }
 
-    public void bfs(Node node) {
-
+    public void bfsCommand() {
+        bfs(root);
     }
 
-    public void dfs(Node node) {
+    public void dfsCommand() {
+        dfs();
+    }
+
+
+    private List<Integer> bfs(Node node) {
+        List<Integer> values = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+
+        while (!queue.isEmpty()) {
+            Node pollNode = queue.poll();
+            values.add(pollNode.value);
+            System.out.print(pollNode.value + " ");
+
+            if (pollNode.left != null) {
+                queue.add(pollNode.left);
+            }
+
+            if (pollNode.right != null) {
+                queue.add(pollNode.right);
+            }
+        }
+
+        return values;
+    }
+
+    public void dfs() {
         // 왼쪽, 루트, 오른쪽 순으로 순회한다.
+        inOrderRecursive(root);
     }
 
     private void inOrderRecursive(Node root) {

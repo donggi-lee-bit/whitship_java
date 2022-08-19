@@ -19,6 +19,9 @@ class BinaryTreeTest {
         binaryTree.insert(12);
         binaryTree.insert(90);
         binaryTree.insert(50);
+        //         45
+        //     10       90
+        //   7   12  50
     }
 
     @Test
@@ -34,5 +37,15 @@ class BinaryTreeTest {
     @Test
     void postOrderTest() {
         binaryTree.postOrder();
+    }
+
+    @Test
+    void bfsTest() {
+        binaryTree.bfsCommand();
+    }
+
+    @Test
+    void dfsTest() {
+        binaryTree.dfsCommand();
     }
 }
