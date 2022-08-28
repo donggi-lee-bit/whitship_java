@@ -1,4 +1,4 @@
-package donggi.whiteship_java.week6.constructorsuper;
+package donggi.whiteship_java.week6.super_ex;
 
 public class Person {
 

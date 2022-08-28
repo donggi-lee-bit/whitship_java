@@ -1,8 +1,9 @@
 package donggi.whiteship_java.week6;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
+import donggi.whiteship_java.week6.extends_ex.Hello;
+import donggi.whiteship_java.week6.extends_ex.HelloParents;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

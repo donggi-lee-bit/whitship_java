@@ -1,4 +1,4 @@
-package donggi.whiteship_java.week6;
+package donggi.whiteship_java.week6.extends_ex;
 
 interface one {
 

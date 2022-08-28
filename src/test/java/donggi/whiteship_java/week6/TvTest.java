@@ -1,8 +1,6 @@
 package donggi.whiteship_java.week6;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import donggi.whiteship_java.week6.Tv.CaptionTv;
+import donggi.whiteship_java.week6.extends_ex.Tv.CaptionTv;
 import org.junit.jupiter.api.Test;
 
 class TvTest {
