@@ -239,16 +239,104 @@ Java의 오버라이딩은 조상 클래스로부터 상속받은 메서드의 �
 오버라이딩 조건이 갖춰진 `static` 메서드를 자손 클래스에서 정의하면 이는 오버라이딩이 아닌 `method hiding`이 발생합니다. 조상 클래스에 정의된 `static` 메서드를 오버라이딩을 통해 재정의하는 게 아닌 자손 클래스에서 하나의 `static` 메서드를 새로이 정의하는것처럼 동작하게 됩니다.
 
 
-<br>
-<br>
+
+## 간단 정리
 정리해보면 오버라이딩을 할 땐
+
 - 접근 제어자를 조상 클래스의 메서드보다 좁은 범위로 변경할 수 없습니다.
-- 예외는 조상 클래스의 메서드보다 많이 선언할 수 없습니다.
+- 예외는 조상 클래스의 메서ㅁ드보다 많이 선언할 수 없습니다.
 - 인스턴스 메서드를 static 메서드로 혹은 그 반대로 변경할 수 없습니다.
 
+# 다이나믹 메서드 디스패치
+
+다이나믹 메서드 디스패치는 `Overriding`된 메서드에 대한 호출이 `compile-time`이 아닌 `runtime`에 결정되는 메커니즘입니다.
+- `Overriding` 메서드가 조상 클래스 참조를 통해 호출될 때 `Java`는 호출이 발생할 때 참조되는 `Object`의 유형에 따라 실행할 메서드의 버전을 결정합니다.
+    - 이 결정은 `runtime`에 이루어집니다.
+
+## 예시
+
+```java
+public class Fruit {
+    void m1() {
+        System.out.println("Eat some Fruit");
+    }
+}
+
+class Apple extends Fruit {
+    void m1() {
+        System.out.println("Eat some Apple");
+    }
+}
+
+class Banana extends Fruit {
+    void m1() {
+        System.out.println("Eat some Banana");
+    }
+}
+
+class Dispatch {
+    public static void main(String args[]) {
+        Fruit fruit = new Fruit();
+        Apple apple = new Apple();
+        Banana banana = new Banana();
 
 
-다이나믹 메소드 디스패치 (Dynamic Method Dispatch)
+        Fruit ref;
+        ref = fruit;
+        ref.m1();
+
+        ref = apple;
+        ref.m1();
+
+        ref = banana;
+        ref.m1();
+    }
+}
+
+```
+- Apple, Banana 클래스는 Fruit 클래스를 상속 받고 있습니다.
+- 각각의 자손 클래스에서는 `m1()`를 재정의하고 있습니다.
+- `Fruit` 클래스 유형의 참조 변수를 선언합니다.
+- `Apple`, `Banana` 인스턴스 변수를 각각 `ref` 변수에 할당하여 `m1()` 메서드를 호출하면 재정의한 메서드가 호출되는 걸 볼 수 있습니다.
+
+```java
+public class A {
+    int x = 10;
+}
+
+class B extends A {
+    int x = 20;
+}
+
+class Test {
+    public static void main(String[] args) {
+        A a = new B(); // object of type B
+
+        // Data member of class A will be accessed
+        System.out.println(a.x);
+        // 10
+    }
+}
+
+```
+- Java에서 메서드만 오버라이드가 가능합니다. 
+- 변수는 오버라이드가 불가능한데 이것에 대한 예시 코드입니다.
+- B 클래스는 A 클래스를 상속 받고 있습니다.
+    - 두 클래스 모두 x라는 멤버 변수를 갖고 있습니다.
+    - `A` 클래스 유형인 참조 변수 `a`로 `B` 클래스 객체를 만듭니다.
+    - 멤버 변수 `x`는 재정의되지 않기 때문에 `runtime` 시점에 결정되는 `다이나믹 메서드 디스패치`가 이루어지지 않고 조상 클래스 `A`의 멤버 변수 `x`의 값이 출력되게 됩니다
+
+## Dynamic Method Dispatch의 장점
+
+1. Dynamic Method Dispatch를 통해 Java는 runtime-polymorphism 핵심인 Override Method를 지원할 수 있습니다.
+2. 이를 통해 상속 관계를 통해 코드 중복을 줄일 수 있고, 자손 클래스에서 일부 메서드를 재정의할 수 있게 됩니다.
+
+## 정적 바인딩과 동적 바인딩
+
+- 정적 바인딩은 compile-time 동안 수행되고 동적 바인딩은 runtime 중에 수행됩니다.
+- `private`, `final`, `static` `method`와 `변수`들은 `정적 바인딩`을 사용하여 `compiler`에 의해 연결되는 반면 `Override method`는 runtime 객체 유형에 따라 runtime 시점에 결합하게 됩니다.
+
+
 추상 클래스
 final 키워드
 Object 클래스
