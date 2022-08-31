@@ -1,66 +1,40 @@
 package donggi.whiteship_java.week6.dynamic_method_dispatch_ex;
 
-// A Java program to illustrate Dynamic Method
-// Dispatch using hierarchical inheritance
-public class A
-{
-    void m1()
-    {
-        System.out.println("Inside A's m1 method");
+public class Fruit {
+    void m1() {
+        System.out.println("Eat some Fruit");
     }
 }
 
-class B extends A
-{
-    // overriding m1()
-    void m1()
-    {
-        System.out.println("Inside B's m1 method");
+class Apple extends Fruit {
+    @Override
+    void m1() {
+        System.out.println("Eat some Apple");
     }
 }
 
-class C extends A
-{
-    // overriding m1()
-    void m1()
-    {
-        System.out.println("Inside C's m1 method");
+class Banana extends Fruit {
+    @Override
+    void m1() {
+        System.out.println("Eat some Banana");
     }
 }
 
-// Driver class
-class Dispatch
-{
-    public static void main(String args[])
-    {
-        // object of type A
-        A a = new A();
+class Dispatch {
+    public static void main(String[] args) {
+        Fruit fruit = new Fruit();
+        Apple apple = new Apple();
+        Banana banana = new Banana();
 
-        // object of type B
-        B b = new B();
 
-        // object of type C
-        C c = new C();
-
-        // obtain a reference of type A
-        A ref;
-
-        // ref refers to an A object
-        ref = a;
-
-        // calling A's version of m1()
+        Fruit ref;
+        ref = fruit;
         ref.m1();
 
-        // now ref refers to a B object
-        ref = b;
-
-        // calling B's version of m1()
+        ref = apple;
         ref.m1();
 
-        // now ref refers to a C object
-        ref = c;
-
-        // calling C's version of m1()
+        ref = banana;
         ref.m1();
     }
 }
