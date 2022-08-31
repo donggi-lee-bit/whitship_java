@@ -336,8 +336,69 @@ class Test {
 - 정적 바인딩은 compile-time 동안 수행되고 동적 바인딩은 runtime 중에 수행됩니다.
 - `private`, `final`, `static` `method`와 `변수`들은 `정적 바인딩`을 사용하여 `compiler`에 의해 연결되는 반면 `Override method`는 runtime 객체 유형에 따라 runtime 시점에 결합하게 됩니다.
 
+# 추상 클래스
 
-추상 클래스
+추상화(abstraction) 는 특정 세부 사항을 숨기고 사용자에게 필수적인 정보만 보여줍니다. `abstract class` 혹은 `interface`를 통해 추상화 할 수 있습니다.
+
+`abstract` 키워드를 이용해 추상 클래스를 만들 수 있습니다. 메서드에도 `abstract` 키워드를 이용하여 추상 메서드를 만들 수 있습니다.
+
+- `abstract class` : 추상 클래스는 인스턴스를 만들 수 없습니다.
+- `abstract method` : 추상 클래스에서만 사용할 수 있으며 본문은 작성하지 않습니다. 본문은 상속된 하위 클래스에서 작성되게 됩니다.
+
+## 예시
+
+```java
+abstract class Base {
+
+    public Base() {
+        System.out.println("Base class constructor");
+    }
+
+    abstract void fun();
+}
+
+class Derived extends Base {
+
+    public Derived() {
+        System.out.println("Derived class constructor");
+    }
+
+    void fun() {
+        System.out.println("Derived fun() called");
+    }
+}
+
+class Main {
+
+    public static void main(String[] args) {
+        Base b = new Derived();
+        b.fun();
+        // Base class constructor
+        // Derived class constructor
+        // Derived fun() called
+    }
+}
+
+```
+- `abstract method`의 본문은 자손 클래스에서 작성되었습니다.
+- 추상 클래스는 `기본 생성자`를 가질 수 있는데 이는 `상속 받은 자손 클래스`의 `인스턴스`가 생성될 때 호출됩니다.
+- 추상 클래스는 추상 메서드 없이 작성할 수 있습니다. 추상 클래스는 `인스턴스화` 할 수 없고, `상속`만 가능하게 됩니다.
+
+## 그 외
+
+- 그 외에도 추상 클래스는 `static` 메서드를 정의할 수 있습니다.
+- 클래스에 추상 메서드가 포함되어 있으면 반드시 클래스를 `abstract`로 선언해야 합니다. 
+- 추상 클래스를 상속 받는 자손 클래스가 추상 메서드를 구현할 수 없는 경우 다음 자식 클래스가 나머지 추상 클래스를 구현할 수 있도록 해당 자식 클래스를 추상 클래스로 선언해줘야 합니다.
+
+## 간단 정리
+
+- 추상 클래스는 `기본 생성자`를 가질 수 있고, 기본 생성자는 상속 관계의 자손 클래스의 `인스턴스`가 생성될 때 호출됩니다.
+- 추상 클래스는 `추상 메서드` 없이 작성 가능하고, 추상 메서드를 선언할 경우 `본문`은 상속 관계의 `자손 클래스`에서 작성하게 됩니다.
+- 추상 클래스는 `인스턴스화` 할 수 없고, `상속`만 가능합니다.
+- 추상 클래스는 `static` 메서드를 정의할 수 있습니다.
+
+
+
 final 키워드
 Object 클래스
 
@@ -351,3 +412,9 @@ https://www.geeksforgeeks.org/inheritance-in-java/
 https://www.geeksforgeeks.org/super-keyword/
 
 https://www.geeksforgeeks.org/overriding-in-java/
+
+https://www.geeksforgeeks.org/dynamic-method-dispatch-runtime-polymorphism-java/
+
+https://www.w3schools.com/java/java_abstract.asp
+
+https://www.geeksforgeeks.org/abstract-classes-in-java/
