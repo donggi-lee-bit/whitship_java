@@ -398,9 +398,110 @@ class Main {
 - 추상 클래스는 `static` 메서드를 정의할 수 있습니다.
 
 
+# Java의 final keyword
 
-final 키워드
-Object 클래스
+final 키워드는 클래스, 메서드, 변수에서 사용 할 수 있습니다.
+- final variable의 경우 변수를 상수로 만듭니다.
+- final method는 메서드가 재정의되는 걸 막습니다. (Override)
+- final class는 해당 클래스의 상속을 막습니다.
+
+## Final Variables
+
+- 변수에는 `final` 키워드를 사용할 수 있습니다. 변수에 `final`을 사용하게 되면 해당 변수는 재할당 할 수 없기에 상수가 됩니다.
+- `final` 키워드를 사용할 변수는 반드시 초기화해주어야 합니다.
+- `final` 키워드를 사용한 참조 변수는 다른 참조 객체를 재할당 할 수 없습니다.
+    - 하지만 참조 변수가 가리키는 객체의 내부 상태는 변경될 수 있습니다.
+    - `배열` 혹은 `collection`에 요소를 추가하거나 제거할 수 있습니다.
+
+### final 변수의 선언과 초기화를 따로 할 수 있는 경우
+
+일반적으로 `final` 키워드를 사용한 변수는 선언과 동시에 초기화를 해주어야한다. 그러지 않으면 `compile-time` 에러가 발생합니다.
+
+특정한 상황에서 `final` 변수의 선언과 초기화를 따로 할 수 있습니다.
+```java
+public class GFG {
+
+    final int THRESHOLD = 5;
+    final int CAPACITY;
+    final int MINIMUM;
+    static final double PI = 3.141592653589793;
+    static final double EULERCONSTANT;
+
+    {
+        CAPACITY = 25;
+    }
+
+    // static initializer block for
+    // initializing EULERCONSTANT
+    static {
+        EULERCONSTANT = 2.3;
+    }
+
+    public GFG() {
+        MINIMUM = -1;
+    }
+
+    public static void main(String[] args) {
+        final int a;
+        a = 10;
+        System.out.println(a);
+
+        int[] arr = new int[]{1, 2, 3};
+        for (final int i : arr) {
+            System.out.println(i);
+        }
+    }
+}
+
+```
+코드 출처 : https://www.geeksforgeeks.org/final-keyword-in-java/
+
+- `final` 키워드를 사용한 `인스턴스` 변수는 인스턴스 블럭에서 변수를 초기화할 수 있습니다.
+- `final` 키워드를 사용한 `static` 변수 또한 `static` 블럭에서 변수를 초기화 할 수 있습니다.
+- 또한 `생성자`에서 `final` 키워드를 사용한 인스턴스 변수를 초기화 할 수 있습니다.
+- 지역 변수에 `final` 키워드를 사용하는 경우 선언과 초기화를 따로 할 수 있습니다.
+
+# Object 클래스
+
+모든 Java 클래스는 직접적, 간접적으로 `Object` 클래스에서 파생됩니다. 클래스가 다른 클래스를 상속 받지 않으면 `Object`의 직접적 자손 클래스이고 다른 클래스를 상속 받게 되면 간접적으로 파생되는 자손 클래스입니다.
+
+## Object 클래스의 메서드
+
+### 1. toString()
+
+toString() 메서드는 객체의 String 표현을 제공하며 객체를 String으로 변환하는데 사용됩니다.
+- 기본적인 toString() 메서드는 객체가 인스턴스인 클래스의 이름, @, 16진수 해시코드를 String으로 반환합니다
+- 일반적으로 toString() 메서드는 재정의하여 사용합니다.
+
+### 2. hashCode()
+
+- JVM은 모든 객체에 대해 해시 코드라는 고유한 번호를 생성합니다. 
+- hashCode() 메서드는 객체의 주소를 반환하는 것이 아닌 알고리즘을 사용하여 객체의 내부 주소를 정수로 변환합니다.
+- hashCode() 메서드는 Java를 이용해 객체의 주소를 찾는 게 불가능하기 때문에, 객체의 주소를 찾기 위해 C/C++과 같은 네이티브 언어를 사용합니다.
+
+### 3. equals(Object obj)
+
+- 주어진 객체를 호출되는 객체와 비교합니다. 
+- equals(Object obj) 메서드를 재정의할 땐 hashCode() 메서드 또한 재정의하는 것이 좋습니다.
+    - 그렇지 않으면 동일한 객체가 서로 다른 해시 값을 얻을 수 있으며 `Hash`(HashMap, HashSet, Hashtable) 기반 컬렉션이 제대로 작동하지 않습니다.
+
+### 4. getClass()
+
+- getClass() 메서드는 `final` 메서드이므로 재정의할 수 없습니다.
+- `this` 객체의 클래스 객체를 반환하며 객체의 실제 런타임 클래스를 가져오는데 사용됩니다.
+- 클래스의 `메타데이터`를 가져오는 데에도 사용할 수 있습니다.
+- `runtime` 시점에 `JVM`이 `heap` 영역에 `java.lang.Class` 객체를 생성합니다. 이 클래스 객체를 사용하여 `getClass()` 메서드는 클래스 수준 정보를 얻을 수 있습니다.
+
+### 5. finalize()
+
+- `finalize()` 메서드는 객체가 `Garbage Collector`에 의해 수집되기 직전에 호출됩니다.
+- 시스템의 자원을 삭제하고 정리 작업을 수행하여 메모리 누수를 최소화하려면 `finalize()` 메서드를 재정의하여 사용해야합니다.
+
+### 6. clone()
+
+- 해당 객체와 동일한 새 객체를 반환합니다.
+- 객체를 복사할 땐 얕은 복사 (Shallow Copy) 와 깊은 복사 (Deep Copy)가 있습니다. [Java clone()](https://www.geeksforgeeks.org/clone-method-in-java-2/)
+
 
 
 # **References**
@@ -418,3 +519,7 @@ https://www.geeksforgeeks.org/dynamic-method-dispatch-runtime-polymorphism-java/
 https://www.w3schools.com/java/java_abstract.asp
 
 https://www.geeksforgeeks.org/abstract-classes-in-java/
+
+https://www.geeksforgeeks.org/final-keyword-in-java/
+
+https://www.geeksforgeeks.org/object-class-in-java/
