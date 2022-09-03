@@ -17,7 +17,7 @@ public class Person {
 class Student extends Person {
     Student() {
         super(10);
-        super();
+//        super();
         System.out.println("Student class Constructor");
     }
 }
